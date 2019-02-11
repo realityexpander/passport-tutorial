@@ -21,9 +21,10 @@ app.use(require('morgan')('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+// app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+app.use(session({ secret: 'passport-tutorial', resave: false, saveUninitialized: true }));
 
-if(!isProduction) {
+if (!isProduction) {
   app.use(errorHandler());
 }
 
@@ -37,7 +38,7 @@ require('./config/passport');
 app.use(require('./routes'));
 
 //Error handlers & middlewares
-if(!isProduction) {
+if (!isProduction) {
   app.use((err, req, res) => {
     res.status(err.status || 500);
 
